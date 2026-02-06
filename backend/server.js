@@ -1,19 +1,19 @@
 // Carrega as variáveis de ambiente do arquivo .env
 require('dotenv').config();
 
-const express = require('express');
-const nodemailer = require('nodemailer'); 
-const cors = require('cors'); 
+import express, { json, urlencoded } from 'express';
+import { createTransport } from 'nodemailer'; 
+import cors from 'cors'; 
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 // Configura o transporter do Nodemailer para Outlook
-const transporter = nodemailer.createTransport({
+const transporter = createTransport({
     host: 'smtp.office365.com', // Servidor SMTP para Outlook/Office 365 (CORRIGIDO: 365, não 3365)
     port: 587, // Porta padrão para TLS/STARTTLS
     secure: false, // Use 'false' para STARTTLS, que é a porta 587

@@ -8,23 +8,16 @@ const Projetos = () => {
       titulo: " Caju E-commerce ",
       descricao: "Plataforma completa de e-commerce com React, Node.js e MongoDB. Inclui sistema de pagamentos, gestão de produtos e painel administrativo.",
       tecnologias: ["React", "Node.js", "MongoDB", "Stripe"],
-      link: "https://github.com/Victor-Luduvice/caju-ecommerce",
+      link: "https://github.com/victor-luduvice/Caju-Comerce",
       imagem: "public/imgSiteCaju.png"
     },
-    {
-      id: 2,
-      titulo: "ToDoList App",
-      descricao: "Aplicação de gestão de tarefas com interface moderna e funcionalidades avançadas.",
-      tecnologias: ["Vue.js", "Firebase", "Vuex", "Vuetify"],
-      link: "https://github.com/Victor-Luduvice/projeto2",
-      imagem: "public/imgTaskList.png"
-    },
+    
     {
       id: 3,
       titulo: "Conectfy",
       descricao: " Startup Sendo desenvolvida! terá o objetivo de conectar ideias e transformar sonhos em realidade.",
       tecnologias: ["React", "Sass", "Vite", "Node.js", "Express", "MongoDB", "Firebase"],
-      link: "https://github.com/Victor-Luduvice/conectfy",
+      link: "https://github.com/victor-luduvice/Project-Conetify",
       imagem: "public/imgConect.png"
     }
   ];
