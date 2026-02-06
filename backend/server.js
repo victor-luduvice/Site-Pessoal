@@ -1,5 +1,6 @@
 // Carrega as variáveis de ambiente do arquivo .env
-require('dotenv').config();
+import 'dotenv/config.js';
+import process from 'node:process';
 
 import express, { json, urlencoded } from 'express';
 import { createTransport } from 'nodemailer'; 
