@@ -1,11 +1,11 @@
 import React from 'react';
 import { FaGithub, FaLinkedin, FaEnvelope, FaInstagram } from 'react-icons/fa';
-import Home from './components/Home';
-import Sobre from './components/Sobre';
-import Projetos from './components/Projetos';
-import Servicos from './components/Servicos';
-import Contato from './components/Contato';
-import './App.css';
+import Home from './components/Home/Home';
+import Sobre from './components/Sobre/Sobre';
+import Projetos from './components/Projetos/Projetos';
+import Servicos from './components/Servicos/Servicos';
+import Contato from './components/Contato/Contato';
+import './styles/App.css';
 
 function App() {
   const scrollToSection = (sectionId) => {

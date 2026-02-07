@@ -52,4 +52,4 @@ const Sobre = () => (
   </div>
 );
 
-export default Sobre; 
+export default Sobre;
