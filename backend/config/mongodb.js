@@ -28,10 +28,7 @@ const connectMongoDB = async () => {
         const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/site-pessoal';
 
         // Conecta ao MongoDB com Mongoose
-        await mongoose.connect(mongoUri, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await mongoose.connect(mongoUri);
 
         console.log('✅ Conectado ao MongoDB com sucesso!');
         console.log(`📌 Banco de dados: ${mongoUri}`);
