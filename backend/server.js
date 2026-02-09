@@ -60,20 +60,29 @@ app.use(urlencoded({ extended: true })); // Processa URL encoded
 })();
 
 // ====== CONFIGURAÇÃO DE EMAIL (NODEMAILER) ======
-// Configura o transporter do Nodemailer para enviar emails via Outlook
-// Nota: Você precisa adicionar EMAIL_USER e EMAIL_PASS no arquivo .env
-const transporter = createTransport({
-    host: 'smtp.office365.com', // Servidor SMTP para Outlook/Office 365
-    port: 587, // Porta padrão para TLS/STARTTLS
-    secure: false, // Use 'false' para STARTTLS na porta 587
-    auth: {
-        user: process.env.EMAIL_USER, // Email (variável de ambiente)
-        pass: process.env.EMAIL_PASS // Senha (variável de ambiente)
-    },
-    tls: {
-        ciphers:'SSLv3'
-    }
-});
+// Usa credenciais via variáveis de ambiente. Se não configuradas,
+// o envio de e-mail será ignorado (a mensagem ainda será salva no DB).
+const RECEIVING_EMAIL = process.env.RECEIVING_EMAIL || 'contatovct@outlook.com';
+const EMAIL_USER = process.env.EMAIL_USER;
+const EMAIL_PASS = process.env.EMAIL_PASS;
+
+let transporter = null;
+if (EMAIL_USER && EMAIL_PASS) {
+    transporter = createTransport({
+        host: 'smtp.office365.com', // Servidor SMTP para Outlook/Office 365
+        port: 587, // Porta padrão para TLS/STARTTLS
+        secure: false, // Use 'false' para STARTTLS na porta 587
+        auth: {
+            user: EMAIL_USER,
+            pass: EMAIL_PASS
+        },
+        tls: {
+            ciphers: 'SSLv3'
+        }
+    });
+} else {
+    console.warn('⚠️ Variáveis de ambiente EMAIL_USER/EMAIL_PASS não configuradas. E-mails não serão enviados.');
+}
 
 // ====== ROTAS ======
 
@@ -136,8 +145,8 @@ app.post('/enviar-mensagem', async (req, res) => {
         // ====== ENVIAR EMAIL (OPCIONAL) ======
         // Configura as opções de email
         const mailOptions = {
-            from: process.env.EMAIL_USER,
-            to: process.env.RECEIVING_EMAIL,
+            from: EMAIL_USER || RECEIVING_EMAIL,
+            to: RECEIVING_EMAIL,
             subject: `Nova Mensagem do Site: ${name}`,
             html: `
                 <h3>Detalhes da Mensagem:</h3>
@@ -151,14 +160,17 @@ app.post('/enviar-mensagem', async (req, res) => {
         };
 
         // Tenta enviar o email (não bloqueia se falhar)
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.error('⚠️ Erro ao enviar e-mail:', error);
-                // Nota: A mensagem já foi salva no banco, então não retorna erro
-            } else {
-                console.log('✅ Email enviado:', info.response);
-            }
-        });
+        if (transporter) {
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.error('⚠️ Erro ao enviar e-mail:', error);
+                } else {
+                    console.log('✅ Email enviado:', info.response);
+                }
+            });
+        } else {
+            console.log('ℹ️ Transporter não configurado. Email não enviado.');
+        }
 
         // ====== RESPOSTA DE SUCESSO ======
         // Retorna mensagem de sucesso ao frontend
