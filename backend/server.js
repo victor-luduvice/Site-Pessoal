@@ -32,6 +32,7 @@ import { createTransport } from 'nodemailer';
 import cors from 'cors';
 import connectMongoDB from './config/mongodb.js'; // Importa a função de conexão MongoDB
 import Message from './models/Message.js'; // Importa o modelo de mensagens 
+import startMongoDB from './utils/startMongoDB.js'; // Importa o utilitário para iniciar MongoDB
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -45,8 +46,18 @@ app.use(json()); // Processa JSON
 app.use(urlencoded({ extended: true })); // Processa URL encoded
 
 // ====== INICIALIZAR CONEXÃO COM MONGODB ======
-// Conecta ao banco de dados assim que o servidor inicia
-connectMongoDB();
+// Inicia o mongod e depois conecta ao banco de dados
+(async () => {
+    try {
+        // Primeiro, tenta iniciar o MongoDB (se não estiver rodando)
+        await startMongoDB();
+        // Depois, conecta ao banco de dados
+        await connectMongoDB();
+    } catch (error) {
+        console.error('❌ Erro ao inicializar MongoDB:', error.message);
+        console.log('⚠️  O servidor continuará rodando, mas sem banco de dados');
+    }
+})();
 
 // ====== CONFIGURAÇÃO DE EMAIL (NODEMAILER) ======
 // Configura o transporter do Nodemailer para enviar emails via Outlook
