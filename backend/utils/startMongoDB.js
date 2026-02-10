@@ -36,7 +36,8 @@ function isMongoDBRunning() {
  * @returns {Promise<void>}
  */
 async function startMongoDB() {
-    return new Promise((resolve, reject) => {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve, reject) => {
         try {
             // Se já estiver rodando, não faz nada
             if (isMongoDBRunning()) {

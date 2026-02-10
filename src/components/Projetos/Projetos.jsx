@@ -1,5 +1,7 @@
 import React from 'react';
-import './Projetos.scss';
+import './Projetos.scss'; 
+import CajuImg from '../../assets/images/imgSiteCaju.png';
+import ConectfyImg from '../../assets/images/imgConect.png';
 
 const Projetos = () => {
   const projetos = [
@@ -9,17 +11,18 @@ const Projetos = () => {
       descricao: "Plataforma completa de e-commerce com React, Node.js e MongoDB. Inclui sistema de pagamentos, gestão de produtos e painel administrativo.",
       tecnologias: ["React", "Node.js", "MongoDB", "Stripe"],
       link: "https://github.com/victor-luduvice/Caju-Comerce",
-      imagem: "public/imgSiteCaju.png"
+      imagem: CajuImg,
     },
     
     {
-      id: 3,
+      id: 2,
       titulo: "Conectfy",
       descricao: " Startup Sendo desenvolvida! terá o objetivo de conectar ideias e transformar sonhos em realidade.",
       tecnologias: ["React", "Sass", "Vite", "Node.js", "Express", "MongoDB", "Firebase"],
       link: "https://github.com/victor-luduvice/Project-Conetify",
-      imagem: "public/imgConect.png"
-    }
+      imagem: ConectfyImg,
+    },
+
   ];
 
   return (
